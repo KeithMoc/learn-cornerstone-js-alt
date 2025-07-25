@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cornerstone.js Resources</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --accent-color: #e74c3c;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --border-color: #e1e4e8;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        main {
+            padding: 2rem 0;
+        }
+        
+        section {
+            margin-bottom: 3rem;
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: var(--card-shadow);
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+            font-size: 1.8rem;
+        }
+        
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .resource-card {
+            background: white;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-shadow);
+        }
+        
+        .card-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            color: var(--secondary-color);
+        }
+        
+        .card-description {
+            color: #666;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: var(--transition);
+            text-align: center;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .tag {
+            display: inline-block;
+            background-color: #e9f5fe;
+            color: var(--primary-color);
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .demo-container {
+            margin-top: 2rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .demo-header {
+            background-color: #f1f1f1;
+            padding: 0.8rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .demo-content {
+            padding: 1rem;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f8f9fa;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: var(--transition);
+        }
+        
+        .tab.active {
+            border-bottom-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .tab:hover:not(.active) {
+            border-bottom-color: #ddd;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .chart-container {
+            height: 300px;
+            margin: 2rem 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        th, td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        th {
+            background-color: #f1f1f1;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+        
+        .footer-links a {
+            color: white;
+            margin: 0 1rem;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .resource-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Cornerstone.js Resources</h1>
+            <p class="subtitle">Everything you need to master Cornerstone.js and Cornerstone3D</p>
+        </div>
+    </header>
+    
+    <main class="container">
+        <section id="official-docs">
+            <h2>Official Documentation</h2>
+            <div class="resource-grid">
+                <div class="resource-card">
+                    <h3 class="card-title">Cornerstone.js Documentation</h3>
+                    <p class="card-description">The official documentation for Cornerstone.js, covering installation, core concepts, and API reference.</p>
+                    <div>
+                        <span class="tag">2D Imaging</span>
+                        <span class="tag">Official</span>
+                    </div>
+                    <a href="https://docs.cornerstonejs.org/" class="btn" target="_blank">View Documentation</a>
+                </div>
+                
+                <div class="resource-card">
+                    <h3 class="card-title">Cornerstone3D Documentation</h3>
+                    <p class="card-description">Comprehensive documentation for Cornerstone3D, including 3D rendering, MPR, and volume visualization.</p>
+                    <div>
+                        <span class="tag">3D Imaging</span>
+                        <span class="tag">Official</span>
+                    </div>
+                    <a href="https://www.cornerstonejs.org/docs/3d-docs" class="btn" target="_blank">View Documentation</a>
+                </div>
+                
+                <div class="resource-card">
+                    <h3 class="card-title">API Reference</h3>
+                    <p class="card-description">Detailed API reference for all Cornerstone libraries, including methods, properties, and events.</p>
+                    <div>
+                        <span class="tag">Reference</span>
+                        <span class="tag">API</span>
+                    </div>
+                    <a href="https://www.cornerstonejs.org/api" class="btn" target="_blank">View API Reference</a>
+                </div>
+            </div>
+        </section>
+        
+        <section id="community-support">
+            <h2>Community & Support</h2>
+            <div class="resource-grid">
+                <div class="resource-card">
+                    <h3 class="card-title">GitHub Repository</h3>
+                    <p class="card-description">The official GitHub repository for Cornerstone.js. Report issues, contribute code, or explore the source.</p>
+                    <a href="https://github.com/cornerstonejs/cornerstone" class="btn" target="_blank">Visit GitHub</a>
+                </div>
+                
+                <div class="resource-card">
+                    <h3 class="card-title">Cornerstone3D Repository</h3>
+                    <p class="card-description">The GitHub repository for Cornerstone3D, the next generation of medical imaging libraries.</p>
+                    <a href="https://github.com/cornerstonejs/cornerstone3D" class="btn" target="_blank">Visit GitHub</a>
+                </div>
+                
+                <div class="resource-card">
+                    <h3 class="card-title">Discussion Forum</h3>
+                    <p class="card-description">Join the community discussion forum to ask questions, share knowledge, and connect with other developers.</p>
+                    <a href="https://github.com/cornerstonejs/cornerstone/discussions" class="btn" target="_blank">Join Discussion</a>
+                </div>
+                
+                <div class="resource-card">
+                    <h3 class="card-title">Stack Overflow</h3>
+                    <p class="card-description">Find answers to common questions or ask your own on Stack Overflow using the cornerstone.js tag.</p>
+                    <a href="https://stackoverflow.com/questions/tagged/cornerstone.js" class="btn" target="_blank">View Questions</a>
+                </div>
+            </div>
+        </section>
+        
+        <section id="examples-demos">
+            <h2>Live Examples & Demos</h2>
+            
+            <div class="tabs">
+                <div class="tab active" data-tab="cornerstone-js">Cornerstone.js</div>
+                <div class="tab" data-tab="cornerstone-3d">Cornerstone3D</div>
+            </div>
+            
+            <div class="tab-content active" id="cornerstone-js-content">
+                <div class="resource-grid">
+                    <div class="resource-card">
+                        <h3 class="card-title">Basic Image Viewer</h3>
+                        <p class="card-description">A simple example showing how to load and display a DICOM image using Cornerstone.js.</p>
+                        <a href="https://www.cornerstonejs.org/examples/basic-viewer" class="btn" target="_blank">View Demo</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <h3 class="card-title">Image Manipulation</h3>
+                        <p class="card-description">Examples of window/level adjustment, zoom, pan, and other image manipulation techniques.</p>
+                        <a href="https://www.cornerstonejs.org/examples/image-manipulation" class="btn" target="_blank">View Demo</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <h3 class="card-title">Annotations</h3>
+                        <p class="card-description">Learn how to add, edit, and save annotations on medical images.</p>
+                        <a href="https://www.cornerstonejs.org/examples/annotations" class="btn" target="_blank">View Demo</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="cornerstone-3d-content">
+                <div class="resource-grid">
+                    <div class="resource-card">
+                        <h3 class="card-title">Volume Rendering</h3>
+                        <p class="card-description">Explore 3D volume rendering capabilities with interactive controls.</p>
+                        <a href="https://www.cornerstonejs.org/examples/3d-volume" class="btn" target="_blank">View Demo</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <h3 class="card-title">MPR (Multi-Planar Reconstruction)</h3>
+                        <p class="card-description">Interactive example of MPR views with synchronized crosshairs.</p>
+                        <a href="https://www.cornerstonejs.org/examples/3d-mpr" class="btn" target="_blank">View Demo</a>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <h3 class="card-title">3D Annotations</h3>
+                        <p class="card-description">Learn how to create and manipulate annotations in 3D space.</p>
+                        <a href="https://www.cornerstonejs.org/examples/3d-annotations" class="btn" target="_blank">View Demo</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="demo-container">
+                <div class="demo-header">
+                    <span>Interactive Demo</span>
+                    <button id="toggle-demo" class="btn btn-outline">Load Demo</button>
+                </div>
+                <div class="demo-content" id="demo-content">
+                    <p>Click "Load Demo" to see an interactive Cornerstone viewer</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="related-libraries">
+            <h2>Related Libraries & Tools</h2>
+            <div class="resource-grid">
+                <div class="resource-card">
+                    <h3 class="card-title">OHIF Viewer</h3>
+                    <p class="card-description">Open Health Imaging Foundation Viewer - a zero-footprint medical image viewer built on top of Cornerstone.</p>
+                    <a href="https://ohif.org/" class="btn" target="_blank">Visit Website</a>
+                </div>
+                
+                <div class="resource-card">
+                    <h3 class="card-title">cornerstone-wado-image-loader</h3>
+                    <p class="card-description">A Cornerstone Image Loader for DICOM Part 10 files and WADO-URI/WADO-RS requests.</p>
+                    <a href="https://github.com/cornerstonejs/cornerstone-wado-image-loader" class="btn" target="_blank">View on GitHub</a>
+                </div>
+                
+                <div class="resource-card">
+                    <h3 class="card-title">dicom-parser</h3>
+                    <p class="card-description">JavaScript library for parsing DICOM files, used by Cornerstone for handling DICOM data.</p>
+                    <a href="https://github.com/cornerstonejs/dicomParser" class="btn" target="_blank">View on GitHub</a>
+                </div>
+                
+                <div class="resource-card">
+                    <h3 class="card-title">cornerstone-tools</h3>
+                    <p class="card-description">Library for building tools on top of Cornerstone, providing annotations, measurements, and more.</p>
+                    <a href="https://github.com/cornerstonejs/cornerstoneTools" class="btn" target="_blank">View on GitHub</a>
+                </div>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Library</th>
+                        <th>Description</th>
+                        <th>Compatibility</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>cornerstone-core</td>
+                        <td>Core library for displaying medical images</td>
+                        <td>All browsers</td>
+                    </tr>
+                    <tr>
+                        <td>cornerstone3D</td>
+                        <td>Next-generation 3D medical imaging library</td>
+                        <td>WebGL2 compatible browsers</td>
+                    </tr>
+                    <tr>
+                        <td>cornerstone-tools</td>
+                        <td>Tools and annotations for Cornerstone</td>
+                        <td>All browsers</td>
+                    </tr>
+                    <tr>
+                        <td>dicom-parser</td>
+                        <td>DICOM parsing library</td>
+                        <td>All browsers</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>Cornerstone.js Resources - A comprehensive guide to medical imaging libraries</p>
+            <div class="footer-links">
+                <a href="#">Home</a>
+                <a href="#official-docs">Documentation</a>
+                <a href="#community-support">Community</a>
+                <a href="#examples-demos">Examples</a>
+                <a href="#related-libraries">Related Libraries</a>
+            </div>
+            <p>&copy; 2023 Cornerstone.js Learning Resources</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Tab functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                // Hide all tab content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Show the corresponding tab content
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(`${tabId}-content`).classList.add('active');
+            });
+        });
+        
+        // Demo toggle functionality
+        const toggleDemoBtn = document.getElementById('toggle-demo');
+        const demoContent = document.getElementById('demo-content');
+        let demoLoaded = false;
+        
+        toggleDemoBtn.addEventListener('click', () => {
+            if (!demoLoaded) {
+                // Simulate loading a demo
+                demoContent.innerHTML = '<div style="text-align: center;"><div style="background: #f1f1f1; border-radius: 8px; padding: 20px; display: inline-block;"><div style="width: 300px; height: 300px; background: linear-gradient(45deg, #333, #666); border-radius: 4px; position: relative; overflow: hidden;"><div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-weight: bold;">Cornerstone Viewer Demo</div><div style="position: absolute; bottom: 10px; left: 10px; background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 4px; color: white; font-size: 12px;">Demo Image</div></div><div style="margin-top: 10px; display: flex; justify-content: center;"><button class="btn btn-outline" style="margin: 0 5px;">Zoom In</button><button class="btn btn-outline" style="margin: 0 5px;">Zoom Out</button><button class="btn btn-outline" style="margin: 0 5px;">Reset</button></div></div></div>';
+                toggleDemoBtn.textContent = 'Unload Demo';
+                demoLoaded = true;
+            } else {
+                // Unload the demo
+                demoContent.innerHTML = '<p>Click \"Load Demo\" to see an interactive Cornerstone viewer</p>';
+                toggleDemoBtn.textContent = 'Load Demo';
+                demoLoaded = false;
+            }
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 20,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
