@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Core Concepts - Cornerstone.js</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f9f9f9;
+        }
+        
+        header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--primary-color);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .nav-links a.active {
+            color: var(--primary-color);
+        }
+        
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px auto;
+            background-color: white;
+            transition: all 0.3s ease-in-out;
+        }
+        
+        section {
+            padding: 3rem 0;
+        }
+        
+        h1, h2, h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .component-item {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .component-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .component-item h3 {
+            color: var(--primary-color);
+        }
+        
+        .flow-diagram {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+        
+        .flow-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            position: relative;
+            flex-wrap: wrap;
+        }
+        
+        .flow-step {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            padding: 1rem;
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        
+        .flow-step-inner {
+            background-color: var(--light-color);
+            border-radius: 8px;
+            padding: 1rem;
+            height: 100%;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        
+        .flow-step-inner:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .flow-step-inner h4 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .flow-arrow {
+            position: absolute;
+            top: 50%;
+            right: -10px;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            z-index: 1;
+        }
+        
+        .flow-step:last-child .flow-arrow {
+            display: none;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .highlight {
+            background-color: rgba(52, 152, 219, 0.1);
+            border-left: 3px solid var(--primary-color);
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background-color: var(--secondary-color);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+                padding: 2rem 0;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 1.5rem 0;
+            }
+            
+            .component-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .flow-steps {
+                flex-direction: column;
+            }
+            
+            .flow-step {
+                margin-bottom: 2rem;
+            }
+            
+            .flow-arrow {
+                transform: rotate(90deg);
+                right: 50%;
+                top: auto;
+                bottom: -20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">Cornerstone<span>.js</span></a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="core-concepts.html" class="active">Core Concepts</a></li>
+                    <li><a href="tools-ecosystem.html">Tools & Ecosystem</a></li>
+                    <li><a href="progressive-loading.html">Progressive Loading</a></li>
+                    <li><a href="resources.html">Resources</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="introduction">
+            <h1>Core Concepts</h1>
+            <div class="card">
+                <p>Cornerstone.js and Cornerstone3D are a suite of JavaScript libraries designed for building powerful, web-based medical imaging applications. These libraries provide developers with the tools needed to create high-performance viewers for DICOM and other medical imaging formats, supporting both 2D and 3D visualization directly in the browser.</p>
+                <p>Whether you're building a simple image viewer or a complex diagnostic workstation, understanding the core concepts behind Cornerstone will help you create efficient, scalable applications.</p>
+            </div>
+        </section>
+
+        <section id="architecture">
+            <h2>Key Architectural Components</h2>
+            <p>Cornerstone.js follows a modular and extensible architecture that allows developers to use only the components they need. The framework is built on the Model-View-Controller (MVC) pattern, promoting a clear separation of concerns.</p>
+            
+            <div class="component-grid">
+                <div class="component-item">
+                    <h3>Cornerstone Core</h3>
+                    <p>The central library for the image rendering pipeline, handling loading, caching, and viewport transformations. It supports both GPU and CPU rendering for optimal performance.</p>
+                </div>
+                
+                <div class="component-item">
+                    <h3>Cornerstone Tools</h3>
+                    <p>An extensible library for building interactive tools that respond to mouse, keyboard, and touch events. Includes measurement tools, annotations, and more.</p>
+                </div>
+                
+                <div class="component-item">
+                    <h3>Image Loaders</h3>
+                    <p>Specialized libraries for different image formats, like <code>CornerstoneWADOImageLoader</code> for DICOM and <code>CornerstoneWebImageLoader</code> for PNG/JPEG.</p>
+                </div>
+                
+                <div class="component-item">
+                    <h3>Metadata Providers</h3>
+                    <p>Components that manage non-pixel metadata like patient information and pixel spacing, making it available to the rendering pipeline.</p>
+                </div>
+            </div>
+            
+            <div class="highlight">
+                <p><strong>Key Insight:</strong> Cornerstone.js follows the Model-View-Controller (MVC) architectural pattern, promoting a clear separation of concerns between data management, user interface, and application logic.</p>
+            </div>
+        </section>
+
+        <section id="data-flow">
+            <h2>Data Flow in Cornerstone3D</h2>
+            <p>Understanding how data flows through the Cornerstone ecosystem is essential for building efficient applications. The process can be broken down into four main phases:</p>
+            
+            <div class="flow-diagram">
+                <h3>Cornerstone Data Flow</h3>
+                <div class="flow-steps">
+                    <div class="flow-step">
+                        <div class="flow-step-inner" id="loading-phase">
+                            <h4>Loading Phase</h4>
+                            <p>Image or Volume Loaders fetch and process medical imaging data</p>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                    </div>
+                    
+                    <div class="flow-step">
+                        <div class="flow-step-inner" id="rendering-phase">
+                            <h4>Rendering Phase</h4>
+                            <p>Processed data is sent to the rendering engine for display in viewports</p>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                    </div>
+                    
+                    <div class="flow-step">
+                        <div class="flow-step-inner" id="interaction-phase">
+                            <h4>Interaction Phase</h4>
+                            <p>Users interact with images using tools for measurements and annotations</p>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                    </div>
+                    
+                    <div class="flow-step">
+                        <div class="flow-step-inner" id="caching-phase">
+                            <h4>Caching Phase</h4>
+                            <p>Accessed data is stored in the cache to improve performance</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <p>This data flow is cyclical, with the caching phase feeding back into the loading phase for subsequent requests. The architecture is designed to be asynchronous, allowing for smooth user interaction even while loading large datasets.</p>
+            </div>
+        </section>
+
+        <section id="essential-concepts">
+            <h2>Essential Data Structures and Concepts</h2>
+            <p>To effectively work with Cornerstone.js and Cornerstone3D, developers should understand these key concepts:</p>
+            
+            <div class="component-grid">
+                <div class="component-item">
+                    <h3>Rendering Engine</h3>
+                    <p>The central component for creating viewports to render images. It manages the canvas elements and handles the rendering pipeline.</p>
+                </div>
+                
+                <div class="component-item">
+                    <h3>Image and Volume Loaders</h3>
+                    <p>Functions that take an <code>ImageId</code> and return image data, or handle 3D data arrays for volumes. They abstract away the complexity of different data formats.</p>
+                </div>
+                
+                <div class="component-item">
+                    <h3>Cache Management</h3>
+                    <p>The Cache API manages memory for images and volumes to optimize performance. It uses strategies like LRU (Least Recently Used) to balance memory usage.</p>
+                </div>
+                
+                <div class="component-item">
+                    <h3>Synchronizers</h3>
+                    <p>Coordinate events across multiple viewports, like linked scrolling or zooming. They help create cohesive multi-viewport layouts.</p>
+                </div>
+                
+                <div class="component-item">
+                    <h3>Web Workers</h3>
+                    <p>Used for computationally intensive tasks to avoid blocking the user interface. They're particularly important for volume rendering and image processing.</p>
+                </div>
+            </div>
+            
+            <div class="highlight">
+                <p><strong>Best Practice:</strong> When building Cornerstone applications, consider using Web Workers for heavy computational tasks like volume rendering or image processing to keep your UI responsive.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Cornerstone.js Documentation. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            
+            hamburger.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                hamburger.classList.toggle('active');
+            });
+            
+            // Interactive flow diagram
+            const flowSteps = document.querySelectorAll('.flow-step-inner');
+            
+            flowSteps.forEach(step => {
+                step.addEventListener('click', function() {
+                    // Remove active class from all steps
+                    flowSteps.forEach(s => s.classList.remove('active'));
+                    
+                    // Add active class to clicked step
+                    this.classList.add('active');
+                    
+                    // You could add more interactive behavior here
+                    const stepId = this.id;
+                    console.log(`Step ${stepId} clicked`);
+                });
+            });
+            
+            // Add animation to cards when they come into view
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+            
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            const animatedElements = document.querySelectorAll('.card, .component-item, .flow-step');
+            
+            animatedElements.forEach(el => {
+                el.style.opacity = 0;
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
