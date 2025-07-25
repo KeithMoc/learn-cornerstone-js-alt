@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn Cornerstone.js - The Definitive Guide to Medical Imaging on the Web</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background-color: var(--light-color);
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 20px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--secondary-color);
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+        
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 120px 0 60px;
+            text-align: center;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+        
+        .cta-button:hover {
+            background-color: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 60px 0;
+        }
+        
+        .section {
+            margin-bottom: 60px;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: var(--primary-color);
+            margin: 15px auto;
+        }
+        
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+        }
+        
+        .card {
+            flex: 1 1 300px;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-img {
+            height: 200px;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+        
+        .card-content {
+            padding: 20px;
+        }
+        
+        .card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+        
+        /* Learning Path */
+        .learning-path {
+            background-color: var(--light-color);
+            padding: 60px 0;
+        }
+        
+        .path-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .path-item {
+            display: flex;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .path-number {
+            flex: 0 0 60px;
+            height: 60px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-right: 20px;
+            z-index: 2;
+        }
+        
+        .path-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            flex: 1;
+        }
+        
+        .path-line {
+            position: absolute;
+            left: 30px;
+            top: 60px;
+            bottom: 0;
+            width: 2px;
+            background-color: var(--primary-color);
+            z-index: 1;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .social-links {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .social-links a {
+            color: white;
+            margin: 0 10px;
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                background-color: var(--light-color);
+                width: 100%;
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+                clip-path: circle(0px at top right);
+                transition: var(--transition);
+            }
+            
+            .nav-links.active {
+                clip-path: circle(1000px at top right);
+            }
+            
+            .nav-links li {
+                margin: 10px 0;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .card-container {
+                flex-direction: column;
+            }
+            
+            .path-item {
+                flex-direction: column;
+            }
+            
+            .path-number {
+                margin-bottom: 15px;
+            }
+            
+            .path-line {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <img src="https://www.jsdelivr.com/open-graph/image/npm/cornerstone-js" alt="Cornerstone.js Logo">
+                    <h1>Learn Cornerstone</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="#">Core Concepts</a></li>
+                    <li><a href="#">Tools & Ecosystem</a></li>
+                    <li><a href="#">Progressive Loading</a></li>
+                    <li><a href="#">Resources</a></li>
+                </ul>
+                <div class="menu-toggle">☰</div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h2>Learn Cornerstone: The Definitive Guide to Medical Imaging on the Web</h2>
+            <p>Master the powerful JavaScript libraries for building advanced web-based medical imaging applications</p>
+            <a href="#" class="cta-button">Start Learning Now</a>
+        </div>
+    </section>
+
+    <section class="main-content">
+        <div class="container">
+            <div class="section">
+                <h2 class="section-title">Introduction to Cornerstone.js</h2>
+                <div class="card-container">
+                    <div class="card">
+                        <div class="card-img">
+                            <i class="fas">📊</i>
+                        </div>
+                        <div class="card-content">
+                            <h3>What is Cornerstone?</h3>
+                            <p>Cornerstone is a comprehensive suite of JavaScript libraries designed specifically for building web-based medical imaging applications. It provides developers with powerful tools to display, manipulate, and interact with medical images directly in the browser.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-img">
+                            <i class="fas">🔍</i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Cornerstone Core</h3>
+                            <p>The foundation library that handles the rendering of medical images with precise windowing, zooming, panning, and pixel-perfect measurements. It's optimized for performance and accuracy in medical visualization.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-img">
+                            <i class="fas">🧩</i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Cornerstone 3D</h3>
+                            <p>The next-generation extension that brings advanced 3D rendering capabilities, allowing for volumetric visualization, multi-planar reconstruction (MPR), and interactive 3D models of medical data.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">Why Learn Cornerstone?</h2>
+                <div class="card-container">
+                    <div class="card">
+                        <div class="card-img">
+                            <i class="fas">⚡</i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Powerful Rendering Engine</h3>
+                            <p>Cornerstone provides a high-performance rendering engine optimized for medical imaging. It handles large datasets efficiently and renders images with clinical-grade quality and precision.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-img">
+                            <i class="fas">🔄</i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Flexible Image Loaders</h3>
+                            <p>Support for various medical imaging formats including DICOM, the standard for medical imaging. Custom loaders can be implemented for specialized formats and data sources.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-img">
+                            <i class="fas">🛠️</i>
+                        </div>
+                        <div class="card-content">
+                            <h3>Robust Framework</h3>
+                            <p>Build interactive applications with tools for measurements, annotations, and image manipulation. The modular architecture allows for customization and extension to meet specific requirements.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="learning-path">
+        <div class="container">
+            <h2 class="section-title">Overview of the Learning Path</h2>
+            <div class="path-container">
+                <div class="path-line"></div>
+                <div class="path-item">
+                    <div class="path-number">1</div>
+                    <div class="path-content">
+                        <h3>Spiral Learning Structure</h3>
+                        <p>Our curriculum follows a spiral learning approach, starting with high-level concepts to give you the big picture before diving into essential details. This ensures you always understand the context of what you're learning.</p>
+                    </div>
+                </div>
+                <div class="path-item">
+                    <div class="path-number">2</div>
+                    <div class="path-content">
+                        <h3>Progressive Knowledge Building</h3>
+                        <p>Each module builds upon previous ones, gradually introducing more complex concepts. You'll start with basic image rendering and progress to advanced 3D visualization and interactive tools.</p>
+                    </div>
+                </div>
+                <div class="path-item">
+                    <div class="path-number">3</div>
+                    <div class="path-content">
+                        <h3>Focus on Must-Learn Information</h3>
+                        <p>We've carefully curated the content to focus on what's truly essential. No fluff or unnecessary details—just the knowledge you need to become proficient with Cornerstone.js and build real-world medical imaging applications.</p>
+                    </div>
+                </div>
+                <div class="path-item">
+                    <div class="path-number">4</div>
+                    <div class="path-content">
+                        <h3>Hands-On Projects</h3>
+                        <p>Apply what you learn through practical exercises and projects. By the end of the learning path, you'll have built several components of a medical imaging viewer and gained confidence in using Cornerstone in your own applications.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="social-links">
+                    <a href="#"><i class="fab">📱</i></a>
+                    <a href="#"><i class="fab">💻</i></a>
+                    <a href="#"><i class="fab">📧</i></a>
+                    <a href="#"><i class="fab">🔗</i></a>
+                </div>
+                <p>&copy; 2023 Learn Cornerstone. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+                
+                // Close mobile menu if open
+                if (navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+        
+        // Highlight active nav item on scroll
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.scrollY;
+            
+            // Add sticky class to header on scroll
+            const header = document.querySelector('header');
+            if (scrollPosition > 50) {
+                header.style.boxShadow = '0 4px 10px rgba(0, 0, 0, 0.1)';
+                header.style.backgroundColor = '#fff';
+            } else {
+                header.style.boxShadow = '';
+                header.style.backgroundColor = '';
+            }
+            
+            // Animate cards on scroll
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                const cardTop = card.getBoundingClientRect().top;
+                if (cardTop < window.innerHeight - 100) {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+        });
+        
+        // Initialize cards with opacity 0 for scroll animation
+        document.querySelectorAll('.card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        });
+    </script>
+</body>
+</html>
